@@ -32,10 +32,20 @@ services:
 
       # ---------- Purge automatique des exécutions ----------
       - key: EXECUTIONS_DATA_PRUNE
-        value: "true"                  # Active la purge automatique
+        value: "true"
       - key: EXECUTIONS_DATA_MAX_AGE
-        value: "14"                    # Nombre de jours à garder
+        value: "14"
       - key: EXECUTIONS_DATA_PRUNE_MAX_COUNT
-        value: "100"                   # Maximum d’exécutions conservées par workflow
+        value: "100"
       - key: EXECUTIONS_DATA_PRUNE_FORCE
-        value: "true"                  # Force la purge même si exécutions actives
+        value: "true"
+
+      # ---------- Webhooks ----------
+      - key: N8N_HOST
+        value: "<RENDER_SERVICE_DOMAIN>"  # À remplacer après le build par chaque utilisateur
+      - key: N8N_PROTOCOL
+        value: "https"                    # Render fournit HTTPS par défaut
+      - key: N8N_PORT
+        value: "5678"                     # doit correspondre au PORT défini plus haut
+      - key: WEBHOOK_TUNNEL_URL
+        value: ""                         # optionnel, à remplir si tunnel externe utilisé
