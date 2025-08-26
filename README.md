@@ -1,70 +1,146 @@
-# n8n-render (mode facile)
+# 🚀 Déployer n8n sur Render (Guide facile & illustré)
 
 [![Déployer sur Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
-### Description
-Ce projet permet de déployer facilement n8n sur Render gratuitement.  
-- Par défaut, n8n utilise **SQLite** (simple et immédiat, idéal pour tester ou faire des démos).  
-- Les webhooks sont configurables via une variable d’environnement (`N8N_HOST`).  
-- Pour une utilisation durable avec persistance des données, vous pouvez basculer vers une **base PostgreSQL Neon gratuite** (0,5 Go).
+---
+
+## 📌 Qu’est-ce que c’est ?
+**n8n** = un outil d’automatisation (comme Zapier, mais gratuit et open-source).  
+Avec ce projet, tu l’installes **gratuitement sur Render**.  
+
+👉 Deux modes :  
+- **SQLite (par défaut)** → fonctionne direct, mais pas durable (les données disparaissent si Render redémarre).  
+- **PostgreSQL Neon (optionnel)** → gratuit (0,5 Go), tes données restent même après un redémarrage.  
 
 ---
 
-## Étapes pour installer n8n sur Render
+## 🗺️ Vue d’ensemble
+Voici le “parcours” :  
 
-### 1️⃣ Déploiement initial
-1. Cliquez sur le bouton Render ci-dessus.  
-2. Choisissez un nom pour votre service (par exemple `n8n`).  
-3. Cliquez sur **Deploy Blueprint**.  
-4. Le service se déploie avec SQLite par défaut.  
-5. À ce stade, votre instance fonctionne, mais les données **ne seront pas persistantes**. Si vous redéployez ou si le container redémarre, il y a risque de perte de workflows et des sauvegardes.
+```
+[Deploy sur Render] → [Configurer domaine] → [Activer DB Neon (optionnel)] → [Créer Workflow Keep Alive]
+```
 
 ---
 
-### 2️⃣ Configurer les webhooks
-1. Dans Render, allez dans **Dashboard → votre service → Environment**.  
-2. Modifiez la variable `N8N_HOST` pour y mettre votre domaine Render, par exemple :  
-nom-service.onrender.com
-
-markdown
-Copier
-Modifier
-3. Vérifiez que `N8N_PROTOCOL` est bien `https` et que `N8N_PORT` correspond au port (`5678`).  
-4. Les webhooks de vos workflows seront alors accessibles sur ce domaine.
-
-
-### 3️⃣ (Optionnel) Passer à une base de données Neon pour la persistance
-1. Créez un compte sur [Neon](https://neon.tech).  
-2. Créez un nouveau projet 
-3. Cliquez sur Connect to your database
-4. Cliquez ensuite sur la petite fleche qui tant vers le bas à côté de Connection string
-5. dans la liste qui va apparaitre, selectionnez **Parameters only** puis sur **Hide password** pour voir votre mot de  passe et copiez vos **Connection string**.  
-3. Dans Render → Dashboard → Environment, ajoutez ou modifiez les variables suivantes :  
-    - DB_TYPE=**postgresdb**
-    - DB_POSTGRESDB_HOST=<host>
-    - DB_POSTGRESDB_DATABASE=<database>
-    - DB_POSTGRESDB_USER=<user>
-    - DB_POSTGRESDB_PASSWORD=<password>
-
-> Remplacez `<host>`, `<database>`, `<user>`, `<password>` par vos informations Neon.  
-4. Redémarrez votre service Render pour prendre en compte la nouvelle base.  
+## ⚡ Étape 1 : Installer n8n
+1. Clique sur le bouton **Deploy to Render** ci-dessus.  
+2. Connecte-toi avec GitHub.  
+3. Donne un **nom** à ton service (ex: `n8n`).  
+4. Clique **Deploy Blueprint**.  
+5. Attends quelques minutes → ton n8n est en ligne 🎉  
 
 ---
 
-### 4️⃣ Purge automatique des exécutions (pour rester sous 0,5 Go)
-- La configuration par défaut active la purge automatique pour limiter la taille des données SQLite/Postgres :  
-- Max 100 exécutions par workflow  
-- Max 14 jours de rétention  
+## 🌍 Étape 2 : Configurer ton domaine Render
+Pour que tes webhooks fonctionnent :  
 
-Vous n’avez rien à configurer pour cela, c’est déjà activé.
+1. Va dans Render → **Dashboard → ton service → Environment**.  
+2. Vérifie/ajoute :  
+   ```
+   N8N_HOST = ton-adresse-render.com
+   N8N_PROTOCOL = https
+   N8N_PORT = 5678
+   WEBHOOK = ton-adresse-render.com
+   ```  
+3. Sauvegarde → Render redémarre ton service.  
+
+👉 Exemple d’URL webhook généré :  
+```
+https://ton-adresse-render.com/webhook/1234
+```
 
 ---
 
-### 5️⃣ Profitez !
-- Votre instance n8n fonctionne sur Render.  
-- Avec SQLite : idéal pour tester ou démo rapide.  
-- Avec Neon : persistance garantie, usage production léger possible.
+## 💾 Étape 3 (optionnel) : Garder tes données (PostgreSQL Neon)
+⚠️ Avec SQLite = données temporaires. Pour garder tes workflows :  
+
+1. Crée un compte gratuit 👉 [neon.tech](https://neon.tech).  
+2. Crée un **nouveau projet** (ex: `n8n-db`).  
+3. Clique sur **Connect to your database** → flèche ▼ → choisis **Parameters only**.  
+4. Clique sur **Hide password** pour afficher ton mot de passe.  
+5. Copie tes paramètres (Host, Database, User, Password).  
+6. Dans Render → **Dashboard → Environment**, ajoute :  
+
+   ```
+   DB_TYPE=postgresdb
+   DB_POSTGRESDB_HOST=exemple.neon.tech
+   DB_POSTGRESDB_DATABASE=neon-db
+   DB_POSTGRESDB_USER=neon-user
+   DB_POSTGRESDB_PASSWORD=motdepasse
+   ```
+
+👉 Résultat : tes données sont sauvegardées même après redémarrage.
 
 ---
 
-**Créé par Chantelou Ngouanou de Tknodev School officiel. Inspiré d’Antoine Deschamps.**
+## 🔄 Étape 4 : Garder n8n éveillé (anti-sleep mode)
+Par défaut, Render “endort” les services gratuits → ton n8n peut s’arrêter.  
+👉 Solution : un **workflow Keep Alive** qui “ping” Render toutes les 10 minutes.  
+
+1. Dans n8n → clique **Create workflow**.  
+2. Colle ce code JSON :  
+
+```json
+{
+  "name": "Keep Alive",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "minutes", "minutesInterval": 10 }]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-224, -16],
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://ton-adresse-render.com/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [16, -16],
+      "name": "HTTP Request"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [[{ "node": "HTTP Request", "type": "main", "index": 0 }]]
+    }
+  }
+}
+```
+
+3. ⚠️ **Important : changer l’URL !**  
+   - Double-clique sur le nœud **HTTP Request**.  
+   - Remplace `https://ton-adresse-render.com/healthz` par ton **vrai domaine Render**.  
+
+   ![Keep Alive Workflow](image.png)
+
+4. Clique sur **Save** puis sur le bouton **Active (check vert)**.  
+
+👉 Maintenant ton n8n reste réveillé 24/7 🚀  
+
+---
+
+## 🧹 Étape 5 : Nettoyage automatique (déjà activé)
+- Max **100 exécutions par workflow**  
+- Max **14 jours de rétention**  
+👉 Rien à faire, c’est déjà configuré.  
+
+---
+
+## ✅ Résumé
+✔️ Déploiement en 1 clic  
+✔️ SQLite = rapide mais temporaire  
+✔️ Neon PostgreSQL = persistant et gratuit (0,5 Go)  
+✔️ Workflow Keep Alive = reste actif 24/7  
+
+---
+
+👨‍💻 **Créé par Chantelou Ngouanou (Tknodev School Officiel)**  
+🙏 Inspiré d’Antoine Deschamps  

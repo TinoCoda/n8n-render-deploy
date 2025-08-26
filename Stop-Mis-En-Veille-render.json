@@ -23,7 +23,7 @@
     },
     {
       "parameters": {
-        "url": "https://n8n-sy23.onrender.com/healthz",
+        "url": "<Remplacer par l'url de votre domaine>/healthz",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
