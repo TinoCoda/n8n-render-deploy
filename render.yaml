@@ -11,7 +11,7 @@ services:
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_CONNECTION_STRING
-        value: postgresql://USER:PASSWORD@HOST.neon.tech/DATABASE?sslmode=require
+        value: "<A remplacer>"
       - key: PORT
         value: "5678"
       - key: N8N_LOG_LEVEL
@@ -24,3 +24,14 @@ services:
         value: fr
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
+      - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+        value: "true"
+      # ---------- Purge automatique des exécutions ----------
+      - key: EXECUTIONS_DATA_PRUNE
+        value: "true"                  # Active la purge automatique
+      - key: EXECUTIONS_DATA_MAX_AGE
+        value: "14"                    # Nombre de jours à garder (ici 14)
+      - key: EXECUTIONS_DATA_PRUNE_MAX_COUNT
+        value: "100"                   # Maximum d’exécutions conservées par workflow
+      - key: EXECUTIONS_DATA_PRUNE_FORCE
+        value: "true"                  # Force la purge même si exécutions actives
