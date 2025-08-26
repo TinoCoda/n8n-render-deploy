@@ -1,5 +1,5 @@
 {
-  "name": "Stop-Mis-En-Veille",
+  "name": "listen",
   "nodes": [
     {
       "parameters": {
@@ -15,23 +15,24 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -288,
-        -96
+        -224,
+        -16
       ],
-      "id": "c9bbf1a9-5286-4456-a9ec-b746ae83b941",
+      "id": "ee441b0e-87cc-4ee1-857d-c25c219217b3",
       "name": "Schedule Trigger"
     },
     {
       "parameters": {
+        "url": "https://n8n-sy23.onrender.com/healthz",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -80,
-        -96
+        16,
+        -16
       ],
-      "id": "0c234b8c-cf1d-4a7a-a614-eb3b49c47a99",
+      "id": "b4571253-ef0f-459d-9a34-8f4a4b9b5e41",
       "name": "HTTP Request"
     }
   ],
@@ -53,10 +54,10 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "c02645ef-7138-456d-a308-9d01936d1db5",
+  "versionId": "fcace975-b879-4bb1-b098-aa1eaa1ac7d3",
   "meta": {
-    "instanceId": "fd3be89b286fce3c0b0371d75724770308162591a53d920f6ee98d4ed3a1b8a5"
+    "instanceId": "ac703130002b121f27b1c530aa7c3958de2fecc2ca14853e4b7de99744eed8a9"
   },
-  "id": "wr0plA3qqh6ro5hj",
+  "id": "HwYbBbxLovl4AMcW",
   "tags": []
 }
