@@ -2,7 +2,7 @@ services:
   - type: web
     name: n8n
     env: docker
-    region: Frankfurt # Render n'a pas de région à Abidjan, on garde une région disponible
+    region: Frankfurt
     plan: free
     branch: main
     numInstances: 1
@@ -10,24 +10,10 @@ services:
     envVars:
       - key: DB_TYPE
         value: postgresdb
-      - key: DB_POSTGRESDB_HOST
-        fromDatabase:
-          name: n8nDB
-          property: host
-      - key: DB_POSTGRESDB_DATABASE
-        fromDatabase:
-          name: n8nDB
-          property: database
-      - key: DB_POSTGRESDB_USER
-        fromDatabase:
-          name: n8nDB
-          property: user
-      - key: DB_POSTGRESDB_PASSWORD
-        fromDatabase:
-          name: n8nDB
-          property: password
+      - key: DB_POSTGRESDB_CONNECTION_STRING
+        value: postgresql://USER:PASSWORD@HOST.neon.tech/DATABASE?sslmode=require
       - key: PORT
-        value: 5678
+        value: "5678"
       - key: N8N_LOG_LEVEL
         value: info
       - key: GENERIC_TIMEZONE
@@ -38,8 +24,3 @@ services:
         value: fr
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
-
-databases:
-  - name: n8nDB
-    region: Frankfurt # Render n'a pas de région à Abidjan, on garde une région disponible
-    plan: free
