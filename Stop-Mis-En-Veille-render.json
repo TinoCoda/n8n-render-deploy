@@ -1,0 +1,62 @@
+{
+  "name": "Stop-Mis-En-Veille",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -288,
+        -96
+      ],
+      "id": "c9bbf1a9-5286-4456-a9ec-b746ae83b941",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        -96
+      ],
+      "id": "0c234b8c-cf1d-4a7a-a614-eb3b49c47a99",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c02645ef-7138-456d-a308-9d01936d1db5",
+  "meta": {
+    "instanceId": "fd3be89b286fce3c0b0371d75724770308162591a53d920f6ee98d4ed3a1b8a5"
+  },
+  "id": "wr0plA3qqh6ro5hj",
+  "tags": []
+}
