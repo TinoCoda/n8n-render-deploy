@@ -42,11 +42,9 @@ Modifier
 3. Dans Render → Dashboard → Environment, ajoutez ou modifiez les variables suivantes :  
     - DB_TYPE=**postgresdb**
     - DB_POSTGRESDB_HOST=<host>
-    - DB_POSTGRESDB_PORT=**5432**
     - DB_POSTGRESDB_DATABASE=<database>
     - DB_POSTGRESDB_USER=<user>
     - DB_POSTGRESDB_PASSWORD=<password>
-    - DB_POSTGRESDB_SSL=**true**
 
 > Remplacez `<host>`, `<database>`, `<user>`, `<password>` par vos informations Neon.  
 4. Redémarrez votre service Render pour prendre en compte la nouvelle base.  

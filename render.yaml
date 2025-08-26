@@ -13,6 +13,18 @@ services:
         value: sqlite
       - key: DB_SQLITE_FILE
         value: /home/node/.n8n/database.sqlite
+      - key: DB_POSTGRESDB_HOST
+        value: ""
+      - key: DB_POSTGRESDB_PORT
+        value: "5432"
+      - key: DB_POSTGRESDB_DATABASE
+        value: ""
+      - key: DB_POSTGRESDB_USER
+        value: ""
+      - key: DB_POSTGRESDB_PASSWORD
+        value: ""
+      - key: DB_POSTGRESDB_SSL
+        value: "true"
 
       # ---------- Configuration n8n générale ----------
       - key: PORT
