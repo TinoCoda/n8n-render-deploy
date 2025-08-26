@@ -38,3 +38,8 @@ services:
         value: fr
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
+
+databases:
+  - name: n8nDB
+    region: Frankfurt # Render n'a pas de région à Abidjan, on garde une région disponible
+    plan: free
