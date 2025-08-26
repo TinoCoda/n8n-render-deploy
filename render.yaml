@@ -10,8 +10,22 @@ services:
     envVars:
       - key: DB_TYPE
         value: postgresdb
-      - key: DB_POSTGRESQL_CONNECTION_URL
-        value: postgresql://neondb_owner:npg_Zv8SrAW9CzTD@ep-solitary-frog-ada95tma-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: n8nDB
+          property: host
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: n8nDB
+          property: database
+      - key: DB_POSTGRESDB_USER
+        fromDatabase:
+          name: n8nDB
+          property: user
+      - key: DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: n8nDB
+          property: password
       - key: PORT
         value: 5678
       - key: N8N_LOG_LEVEL
