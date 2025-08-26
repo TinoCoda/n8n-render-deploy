@@ -15,7 +15,7 @@ Suivez ces étapes :
 #### 2. Déployer n8n sur Render
 1. Cliquez sur le bouton render ci-dessus
 2. Choisissez un nom de blueprint, par exemple "n8n"
-3. Cliquez sur "Create New Ressources"
+3. Cliquez sur "Create blueprint"
 4. Appliquez
 5. Allez dans Dashboard > n8n (votre nom de service) > Environment
 6. Copiez votre URL (lien violet dans l'en-tête)
