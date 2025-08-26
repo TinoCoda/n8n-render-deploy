@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: n8n
+    env: docker
+    region: Frankfurt 
+    plan: free
+    branch: main
+    numInstances: 1
+    healthCheckPath: /healthz
+    envVars:
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESQL_CONNECTION_URL
+        value: A remplacer
+      - key: PORT
+        value: 5678
+      - key: N8N_LOG_LEVEL
+        value: info
+      - key: GENERIC_TIMEZONE
+        value: Africa/Abidjan
+      - key: TZ
+        value: Africa/Abidjan
+      - key: N8N_DEFAULT_LOCALE
+        value: fr
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+
+databases:
+  - name: n8nDB
+    region: Frankfurt 
+    plan: free
