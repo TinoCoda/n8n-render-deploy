@@ -8,20 +8,13 @@ services:
     numInstances: 1
     healthCheckPath: /healthz
     envVars:
+      # ---------- Base SQLite par défaut ----------
       - key: DB_TYPE
-        value: postgresdb
-      - key: DB_POSTGRESDB_HOST
-        value: "<host>.neon.tech"
-      - key: DB_POSTGRESDB_PORT
-        value: "5432"
-      - key: DB_POSTGRESDB_DATABASE
-        value: "<database>"
-      - key: DB_POSTGRESDB_USER
-        value: "<user>"
-      - key: DB_POSTGRESDB_PASSWORD
-        value: "<password>"
-      - key: DB_POSTGRESDB_SSL
-        value: "true"
+        value: sqlite
+      - key: DB_SQLITE_FILE
+        value: /home/node/.n8n/database.sqlite
+
+      # ---------- Configuration n8n générale ----------
       - key: PORT
         value: "5678"
       - key: N8N_LOG_LEVEL
@@ -36,12 +29,13 @@ services:
         generateValue: true
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
-      # Purge auto des exécutions
+
+      # ---------- Purge automatique des exécutions ----------
       - key: EXECUTIONS_DATA_PRUNE
-        value: "true"
+        value: "true"                  # Active la purge automatique
       - key: EXECUTIONS_DATA_MAX_AGE
-        value: "14"
+        value: "14"                    # Nombre de jours à garder
       - key: EXECUTIONS_DATA_PRUNE_MAX_COUNT
-        value: "100"
+        value: "100"                   # Maximum d’exécutions conservées par workflow
       - key: EXECUTIONS_DATA_PRUNE_FORCE
-        value: "true"
+        value: "true"                  # Force la purge même si exécutions actives
