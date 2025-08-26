@@ -29,6 +29,8 @@ services:
         generateValue: true
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: "false"
 
       # ---------- Purge automatique des exécutions ----------
       - key: EXECUTIONS_DATA_PRUNE
@@ -47,5 +49,5 @@ services:
         value: "https"                    # Render fournit HTTPS par défaut
       - key: N8N_PORT
         value: "5678"                     # doit correspondre au PORT défini plus haut
-      - key: WEBHOOK_TUNNEL_URL
-        value: ""                         # optionnel, à remplir si tunnel externe utilisé
+      - key: WEBHOOK_URL
+        value: ""    
