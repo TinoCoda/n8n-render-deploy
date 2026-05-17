@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python libs you need
-RUN pip3 install beautifulsoup4 requests
+# Install Python libs you need (Debian Bookworm requires this flag)
+RUN pip3 install --break-system-packages beautifulsoup4 requests
 
 # Expose n8n port
 EXPOSE 5678
