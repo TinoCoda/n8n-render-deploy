@@ -1,7 +1,5 @@
-FROM n8nio/n8n:latest
-
-# Switch to root to install system packages
-USER root
+# Use Debian so apt-get works
+FROM debian:bookworm
 
 # Install Node.js 18, Python, and build tools
 RUN apt-get update && apt-get install -y \
@@ -15,12 +13,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# (Optional but useful) Install common Python libs for your workflows
-RUN pip3 install --no-cache-dir \
-    beautifulsoup4 \
-    requests
+# Install Python libs you need
+RUN pip3 install beautifulsoup4 requests
 
-# Switch back to n8n user
-USER node
-# Default command (keep n8n as entrypoint )
+# Expose n8n port
+EXPOSE 5678
+
+# Start n8n
 CMD ["n8n"]
